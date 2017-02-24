@@ -1,0 +1,6 @@
+Dear Studants,
+this is a sample file similar to the one that will
+be used to test your projects. I sugest you use it
+for testing your code and developping your software.
+Have fun!
+E. Polizzi
