@@ -2,20 +2,19 @@ import java.util.*;
 
 public class DictionaryApplication{
 	public static void ToolsMenu(){
-		System.out.println("========= Main Menu =========");     
-		System.out.println("1. Select dictionary");
-		System.out.println("2. Sort dictionary");
-		System.out.println("3. Search dictionary");
-		System.out.println("4. Spell checker");
-		System.out.println("5. Anagram finder");
-		System.out.println("6. Create an anagram dictionary and test");
-		System.out.println("7. Scrabble helper");
+		System.out.println("====== Dictionary App Main Menu =======");     
+		System.out.println("1. Select");
+		System.out.println("2. Sort");
+		System.out.println("3. Search");
+		System.out.println("4. Spell-checker");
+		System.out.println("5. Anagram-finder");
+		System.out.println("6. Scrabble-helper");
+		System.out.println("7. Create and test anagram dictionary");
 		System.out.println("8. Current dictionary status");
 		System.out.println("0. Exit");
-		System.out.println("");
+		System.out.println("======================================");
 		System.out.print("Command: ");
-    }
-      
+    }     
   
     public static void main(String args[]){
     	EasyIn easy = new EasyIn();
@@ -25,20 +24,13 @@ public class DictionaryApplication{
     	long startTime;
 		long endTime;
 	    int command = -1;
-	  
-		System.out.println("Welcome to the Dictionary App");
-		System.out.println("=============================");	
-	    
-		while(command != 0){
-		    if(command > 0){
-		    	//pause = easy.readString();
-		    }
-		    
+
+		while(command != 0){		    
 		    ToolsMenu();
 		    command = easy.readInt();
 	
 		    switch(command){
-		    	case 1: // Select dictionary
+		    	case 1: // Select option
 		    		System.out.println("\nSelect dictionary:");
 		    		System.out.println("1. English");
 		    		System.out.println("2. French");
@@ -76,7 +68,7 @@ public class DictionaryApplication{
 		    			break;
 		    		}		
 		    	
-		    	case 2: // Sort dictionary
+		    	case 2: // Sort option
 				    System.out.print("Select sorting algorithm (1. bubbleSort, 2. selectionSort, 3. insertionSort): ");
 				    int sort = easy.readInt(); 
 				    
@@ -108,7 +100,7 @@ public class DictionaryApplication{
 				    
 				    break;
 
-				case  3: // Search dictionary	     
+				case  3: // Search option	     
 				    System.out.print("How many words to search (1 <= x <= " + dict.getSize() + ")?: ");
 				    int howMany = easy.readInt();
 				    System.out.println();
@@ -126,7 +118,7 @@ public class DictionaryApplication{
 					System.out.println();
 				    break;
 		    
-				case 4: // Spell checker
+				case 4: // Spell-checker option
 				    System.out.print("Spell check a text file(1. English(sample), 2. French(sample), 3. Spanish(sample), 4. letter.txt): ");
 				    int choice2 = easy.readInt();
 				    
@@ -147,7 +139,7 @@ public class DictionaryApplication{
 				    
 				    break;         
 		     
-				case 5: // Anagram finder
+				case 5: // Anagram-finder option
 					if(dict.getStatus() == "Sorted"){
 					    System.out.print("Enter a word: ");
 					    String example = easy.readString();
@@ -158,7 +150,6 @@ public class DictionaryApplication{
 					else if(dict.getStatus() == "Anagram"){
 						System.out.print("Enter a word: ");
 						String example = easy.readString();
-						//int i = dict.anagramModified(example);	
 						
 						if(dict.anagramModified(example)){
 						for(int j = 0; j < dict.getDuplicate(); j++)
@@ -177,8 +168,32 @@ public class DictionaryApplication{
 			    		System.out.println("Please either sort or create an anagram dictionary before utilizing this option.\n");
 			    		break;
 					}
+					
+				case 6: // Scrabble-helper option
+					int score = 0;
+					
+				    System.out.print("Enter series of letters: ");
+				    String scrabword = easy.readString();
+				    System.out.println();
+				    int nbperm = dict.countWordComb(scrabword.toLowerCase());
+				    System.out.print(nbperm + " letter combinations found. ");
+				    
+				    String[] swlist = dict.generateWordComb(scrabword.toLowerCase());
+				    int[] winner = new int[swlist.length];
+
+				    System.out.println("Words found in the sorted-anagram dictionary: ");
+
+				    for(int i = 0; i < swlist.length; i++){
+				    	if(dict.anagramModified(swlist[i]) && swlist[i].length() > 1)
+				    		for(int j = 0; j < dict.getDuplicate(); j++){
+				    			System.out.println("-- " + wlist[map[dict.getIndex()+j] - 2] + " (" + dict.scoreScrabble(swlist[i]) + ")");
+							}
+				    }
+
+				    System.out.println();				    
+				    break;
 			    		
-				case 6: // Create dictionary (sorted dictionary must already be saved)
+				case 7: // Create anagram dictionary option (NOTE: sorted dictionary must already be saved!)
 				    if(dict.getStatus() != "Sorted"){
 				    	System.out.println("Dictionary must first be sorted before selecting this option.\n");
 				    	break;
@@ -203,31 +218,9 @@ public class DictionaryApplication{
 				    System.out.println();
 				    break;
 			           
-				case 7: // Scrabble helper
-					int score = 0;
-					
-				    System.out.print("Enter series of letters: ");
-				    String scrabword = easy.readString();
-				    System.out.println();
-				    int nbperm = dict.countWordComb(scrabword.toLowerCase());
-				    System.out.print(nbperm + " letter combinations found. ");
+				
 				    
-				    String[] swlist = dict.generateWordComb(scrabword.toLowerCase());
-				    int[] winner = new int[swlist.length];
-
-				    System.out.println("Words found in the sorted-anagram dictionary: ");
-
-				    for(int i = 0; i < swlist.length; i++){
-				    	if(dict.anagramModified(swlist[i]) && swlist[i].length() > 1)
-				    		for(int j = 0; j < dict.getDuplicate(); j++){
-				    			System.out.println("-- " + wlist[map[dict.getIndex()+j] - 2] + " (" + dict.scoreScrabble(swlist[i]) + ")");
-							}
-				    }
-
-				    System.out.println();				    
-				    break;
-				    
-				case 8: // Current dictionary status
+				case 8: // Current dictionary status option
 				    System.out.println("Current dictionary: '" + dict.getName() + "'");
 				    System.out.print("Number of entries: " + dict.getSize());
 				    System.out.println("  Status: " + dict.getStatus() + "\n"); 
